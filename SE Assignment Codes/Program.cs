@@ -11,8 +11,8 @@ class Program
             Console.WriteLine("Parking Management System Menu:");
             Console.WriteLine("1. Apply for new season pass");
             Console.WriteLine("2. Process season pass application");
-            Console.WriteLine("3. <item a>");
-            Console.WriteLine("4. <item b>");
+            Console.WriteLine("3. Terminate season pass");
+            Console.WriteLine("4. Generate Financial Report");
             Console.WriteLine("0. Exit");
 
             Console.Write("Enter your choice: ");
@@ -29,11 +29,11 @@ class Program
                     break;
 
                 case "3":
-                    parkingSystem.ItemAFunction();
+                    parkingSystem.TerminateSeasonPass();
                     break;
 
                 case "4":
-                    parkingSystem.ItemBFunction();
+                    parkingSystem.GenerateFinancialReport();
                     break;
 
                 case "0":
@@ -64,15 +64,15 @@ class ParkingManagementSystem
         // Your implementation for option 2 goes here
     }
 
-    public void ItemAFunction()
+    public void TerminateSeasonPass()
     {
-        Console.WriteLine("Executing <item a> function...");
+        Console.WriteLine("TerminateSeasonPass...");
         // Your implementation for option 3 goes here
     }
 
-    public void ItemBFunction()
+    public void GenerateFinancialReport()
     {
-        Console.WriteLine("Executing <item b> function...");
+        Console.WriteLine("GenerateFinancialReport...");
         // Your implementation for option 4 goes here
     }
 }
