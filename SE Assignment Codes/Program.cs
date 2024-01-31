@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using SE_Assignment_Codes;
 
 
@@ -150,7 +151,64 @@ class Program
 
     public static void GenerateFinancialReport()
     {
-        Console.WriteLine("GenerateFinancialReport...");
-        // Your implementation for option 4 goes here
+        Console.WriteLine("Generating Financial Report...");
+
+        // Prompt the applicant to provide necessary details
+        Console.Write("Enter your username: ");
+        string username = Console.ReadLine();
+
+        Console.Write("Enter your password: ");
+        string password = Console.ReadLine();
+
+        Console.WriteLine("Generate report for:");
+        Console.WriteLine("1. All vehicles");
+        Console.WriteLine("2. Vehicles owned by staff");
+        Console.WriteLine("3. Vehicles owned by students");
+        Console.WriteLine("0. Back");
+
+        Console.Write("Enter your choice: ");
+
+        User user = new User("name", "applicantId", "username", "password", "mobileNumber");
+        Report report = new Report(user);
+
+        List<ReportFilter> reportFilters = new List<ReportFilter>();
+        string choice = Console.ReadLine();
+
+        while (reportFilters.Count == 0)
+        {
+            switch (choice)
+            {
+                case "1":
+                    reportFilters.Add(ReportFilter.vehiclesOwnedByStaff);
+                    reportFilters.Add(ReportFilter.vehiclesOwnedByStudent);
+                    break;
+                case "2":
+                    reportFilters.Add(ReportFilter.vehiclesOwnedByStaff);
+                    break;
+
+                case "3":
+                    reportFilters.Add(ReportFilter.vehiclesOwnedByStudent);
+                    break;
+
+                case "0":
+                    return;
+
+                default:
+                    Console.Write("Invalid choice. Please enter a valid option: ");
+                    choice = Console.ReadLine();
+                    break;
+            }
+        }
+        report.setReportFilters(reportFilters);
+
+
+        Console.Write("Enter report month (MM/YYYY): ");
+        string reportMonthStr = Console.ReadLine();
+
+        while (!report.setReportMonth(reportMonthStr))
+        {
+            Console.Write("Re-enter the month (MM/YYYY): ");
+            reportMonthStr = Console.ReadLine();
+        }
     }
 }

@@ -1,0 +1,26 @@
+﻿<Properties StartupConfiguration="{5320D833-D58C-4D6F-B2B2-67A2700D0936}|Default">
+  <MonoDevelop.Ide.ItemProperties.SE_220Assignment_220Codes PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="SE Assignment Codes/Program.cs">
+    <Files>
+      <File FileName="SE Assignment Codes/ReportIterator.cs" Line="27" Column="6" />
+      <File FileName="SE Assignment Codes/Program.cs" Line="163" Column="9" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="SE Assignment Codes" expanded="True">
+            <Node name="SE Assignment Codes" expanded="True">
+              <Node name="Program.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

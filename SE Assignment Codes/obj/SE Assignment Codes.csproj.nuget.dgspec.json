@@ -1,31 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ryany\\Documents\\Year 3\\Sem 2\\Software Engineering (SE)\\assignment\\SE Assignment Codes\\SE Assignment Codes\\SE Assignment Codes.csproj": {}
+    "/Users/jiachen/Downloads/SE-Assignment/SE Assignment Codes/SE Assignment Codes.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ryany\\Documents\\Year 3\\Sem 2\\Software Engineering (SE)\\assignment\\SE Assignment Codes\\SE Assignment Codes\\SE Assignment Codes.csproj": {
+    "/Users/jiachen/Downloads/SE-Assignment/SE Assignment Codes/SE Assignment Codes.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ryany\\Documents\\Year 3\\Sem 2\\Software Engineering (SE)\\assignment\\SE Assignment Codes\\SE Assignment Codes\\SE Assignment Codes.csproj",
+        "projectUniqueName": "/Users/jiachen/Downloads/SE-Assignment/SE Assignment Codes/SE Assignment Codes.csproj",
         "projectName": "SE Assignment Codes",
-        "projectPath": "C:\\Users\\ryany\\Documents\\Year 3\\Sem 2\\Software Engineering (SE)\\assignment\\SE Assignment Codes\\SE Assignment Codes\\SE Assignment Codes.csproj",
-        "packagesPath": "C:\\Users\\ryany\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ryany\\Documents\\Year 3\\Sem 2\\Software Engineering (SE)\\assignment\\SE Assignment Codes\\SE Assignment Codes\\obj\\",
+        "projectPath": "/Users/jiachen/Downloads/SE-Assignment/SE Assignment Codes/SE Assignment Codes.csproj",
+        "packagesPath": "/Users/jiachen/.nuget/packages/",
+        "outputPath": "/Users/jiachen/Downloads/SE-Assignment/SE Assignment Codes/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\ryany\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/jiachen/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -58,7 +52,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.414\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/x64/sdk/6.0.106/RuntimeIdentifierGraph.json"
         }
       }
     }
