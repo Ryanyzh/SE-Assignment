@@ -14,14 +14,17 @@ namespace SE_Assignment_Codes
         public string Password { get; set; }
         public string MobileNumber { get; set; }
 
+        public bool IsStaff { get; set; }
+
         // Constructor
-        public User(string name, string id, string username, string password, string mobileNumber)
+        public User(string name, string id, string username, string password, string mobileNumber, bool isStaff)
         {
             Name = name;
             ID = id;
             Username = username;
             Password = password;
             MobileNumber = mobileNumber;
+            IsStaff = isStaff;
         }
 
         // Method to provide user's name

@@ -13,11 +13,14 @@ namespace SE_Assignment_Codes
         public DateTime ExitDateTime { get; set; }
         public double AmountCharged { get; set; }
 
+        public User User { get; set; }
+
         // Constructor
-        public ParkingRecord(int recordNumber, DateTime entryDateTime)
+        public ParkingRecord(int recordNumber, DateTime entryDateTime, User user)
         {
             RecordNumber = recordNumber;
             EntryDateTime = entryDateTime;
+            User = user;
         }
 
         // Capture parking data
