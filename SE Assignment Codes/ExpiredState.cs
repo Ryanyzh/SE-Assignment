@@ -17,6 +17,7 @@ namespace SE_Assignment_Codes
 
         public void Apply()
         {
+
             // seasonPass.Apply(); --> GOT ERROR
         }
 
@@ -33,7 +34,7 @@ namespace SE_Assignment_Codes
         public void Terminate(string reason)
         {
             Console.WriteLine($"Terminating the expired season pass: {reason}");
-            seasonPass.State = new TerminatedState(seasonPass);
+            seasonPass.State = seasonPass.TerminatedState;
         }
 
         public void TransferToVehicle(Vehicle newVehicle)

@@ -18,6 +18,7 @@ namespace SE_Assignment_Codes
         public void Apply()
         {
             Console.WriteLine("Season pass application is already being processed.");
+
         }
 
         public void Renew()
@@ -32,7 +33,7 @@ namespace SE_Assignment_Codes
 
         public void Terminate(string reason)
         {
-            Console.WriteLine($"Cannot terminate while processing application: {reason}");
+            Console.WriteLine($"Cannot terminate while processing application. Your reason: {reason}");
         }
 
         public void TransferToVehicle(Vehicle newVehicle)

@@ -28,13 +28,14 @@ namespace SE_Assignment_Codes
         public void Expire()
         {
             Console.WriteLine("Expiring the season pass.");
-            seasonPass.State = new ExpiredState(seasonPass);
+            seasonPass.State = seasonPass.ExpiredState;
         }
 
         public void Terminate(string reason)
         {
             Console.WriteLine($"Terminating the season pass: {reason}");
-            seasonPass.State = new TerminatedState(seasonPass);
+            seasonPass.State = seasonPass.TerminatedState;
+
         }
 
         public void TransferToVehicle(Vehicle newVehicle)

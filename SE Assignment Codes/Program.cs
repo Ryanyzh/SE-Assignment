@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Linq;
 using SE_Assignment_Codes;
 
 
@@ -6,6 +7,13 @@ class Program
 {
     static void Main()
     {
+        //Replace with csv reader 
+        User user = new User("Hong Wei", "S1020927J", "S10203927", "TheLowLowLow", "81176336");
+        Vehicle vehicle = new Vehicle("SHUAT999", "IAMBIGFANOFIU", "Plane");
+        DateTime sd = DateTime.ParseExact("01/2003", "MM/yyyy", null);
+        DateTime ed = DateTime.ParseExact("07/2024", "MM/yyyy", null);
+        MonthlySeasonPass seasonPass = new MonthlySeasonPass(0, user, sd, ed, "DollaDollaBills", vehicle, "Monthly", 50);
+        seasonPass.subtractSeasonPass();
 
         while (true)
         {
@@ -22,7 +30,7 @@ class Program
             switch (choice)
             {
                 case "1":
-                    ApplyForNewSeasonPass();
+                    ApplyForNewSeasonPass(seasonPass);
                     break;
 
                 case "2":
@@ -30,7 +38,7 @@ class Program
                     break;
 
                 case "3":
-                    TerminateSeasonPass();
+                    TerminateSeasonPass(seasonPass);
                     break;
 
                 case "4":
@@ -50,7 +58,7 @@ class Program
         }
     }
 
-    public static void ApplyForNewSeasonPass()
+    public static void ApplyForNewSeasonPass(SeasonPass seasonPass1)
     {
         Console.WriteLine("Applying for a new season pass...");
 
@@ -126,7 +134,7 @@ class Program
             SeasonPass seasonPass = new SeasonPass(0, user, startMonth, endMonth, paymentMode, vehicle, passType);
 
             // Update status to 'processing'
-            seasonPass.State.Apply();
+            seasonPass1.State.Apply();
 
             Console.WriteLine("Season pass application submitted successfully.");
         }
@@ -142,9 +150,48 @@ class Program
         // Your implementation for option 2 goes here
     }
 
-    public static void TerminateSeasonPass()
+    public static void TerminateSeasonPass(MonthlySeasonPass seasonPass)
     {
-        Console.WriteLine("TerminateSeasonPass...");
+        //For testing
+
+        //Check for existing season pass
+
+        //End check
+
+        int cancel = 0;
+        while(cancel != 1 && cancel != 2)
+        {
+            try
+            {
+                Console.Write("Confirm that you want to terminate season pass\n[1]Yes [2] No\nEnter option:");
+                cancel = Int32.Parse(Console.ReadLine());
+                Console.WriteLine(cancel);
+            }
+            catch
+            {
+                Console.WriteLine("Input entered is not a number\n");
+            }
+        }
+        if (cancel == 1)
+        {
+            Console.Write("Enter your reason for cancelling: ");
+            string response = Console.ReadLine();
+            seasonPass.Terminate(response);
+            //seasonPass.setState(seasonPass.ExpiredState);
+            if (seasonPass.Type == "Monthly") //Refund
+            {
+                double amtRefunded = seasonPass.RefundUnusedMonths();
+                Console.WriteLine($"A refund of ${amtRefunded} has been sent to your account");
+                seasonPass.addSeasonPass();
+            }
+            Console.WriteLine("Season pass HAS BEEN cancelled\n");
+
+        }
+        else if (cancel == 2)
+        {
+            Console.WriteLine("Season pass was NOT cancelled\n");
+        }
+        //Console.WriteLine("TerminateSeasonPass...");
         // Your implementation for option 3 goes here
     }
 

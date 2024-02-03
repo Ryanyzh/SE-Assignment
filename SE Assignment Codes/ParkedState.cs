@@ -19,7 +19,7 @@ namespace SE_Assignment_Codes
 
         public void Exit()
         {
-            seasonPass.State = new ExitedState(seasonPass);
+            seasonPass.State = seasonPass.ExitedState;
         }
     }
 }
