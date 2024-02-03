@@ -7,11 +7,13 @@ class Program
 {
     static void Main()
     {
+        //Replace with csv reader 
         User user = new User("Hong Wei", "S1020927J", "S10203927", "TheLowLowLow", "81176336");
         Vehicle vehicle = new Vehicle("SHUAT999", "IAMBIGFANOFIU", "Plane");
         DateTime sd = DateTime.ParseExact("01/2003", "MM/yyyy", null);
         DateTime ed = DateTime.ParseExact("07/2024", "MM/yyyy", null);
-        SeasonPass seasonPass1 = new SeasonPass(0, user, sd, ed, "DollaDollaBills", vehicle, "Monthly");
+        MonthlySeasonPass seasonPass = new MonthlySeasonPass(0, user, sd, ed, "DollaDollaBills", vehicle, "Monthly", 50);
+        seasonPass.subtractSeasonPass();
 
         while (true)
         {
@@ -28,7 +30,7 @@ class Program
             switch (choice)
             {
                 case "1":
-                    ApplyForNewSeasonPass(seasonPass1);
+                    ApplyForNewSeasonPass(seasonPass);
                     break;
 
                 case "2":
@@ -36,7 +38,7 @@ class Program
                     break;
 
                 case "3":
-                    TerminateSeasonPass(seasonPass1);
+                    TerminateSeasonPass(seasonPass);
                     break;
 
                 case "4":
@@ -148,16 +150,13 @@ class Program
         // Your implementation for option 2 goes here
     }
 
-    public static void TerminateSeasonPass(SeasonPass seasonPass1)
+    public static void TerminateSeasonPass(MonthlySeasonPass seasonPass)
     {
         //For testing
 
         //Check for existing season pass
-        //Console.WriteLine(seasonPass.State.ToString() == "SE_Assignment_Codes.ProcessingState");
-        //if ()
-        //{
 
-        //}
+        //End check
 
         int cancel = 0;
         while(cancel != 1 && cancel != 2)
@@ -177,12 +176,13 @@ class Program
         {
             Console.Write("Enter your reason for cancelling: ");
             string response = Console.ReadLine();
-            seasonPass1.State.Terminate(response);
+            seasonPass.Terminate(response);
             //seasonPass.setState(seasonPass.ExpiredState);
-            if (seasonPass1.Type == "Monthly") //Refund
+            if (seasonPass.Type == "Monthly") //Refund
             {
-                double amtRefunded = seasonPass1.RefundUnusedMonths();
+                double amtRefunded = seasonPass.RefundUnusedMonths();
                 Console.WriteLine($"A refund of ${amtRefunded} has been sent to your account");
+                seasonPass.addSeasonPass();
             }
             Console.WriteLine("Season pass HAS BEEN cancelled\n");
 

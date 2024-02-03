@@ -48,19 +48,13 @@ namespace SE_Assignment_Codes
             Vehicle = vehicle;
             Type = type;
 
-            processingState = new ProcessingState(this);
-            validState = new ValidState(this);
-            expiredState = new ExpiredState(this);
-            terminatedState = new TerminatedState(this);
-            exitedState = new ExitedState(this);
-
             ProcessingState = new ProcessingState(this);
             ValidState = new ValidState(this);
             ExpiredState = new ExpiredState(this);
             TerminatedState = new TerminatedState(this);
             ExitedState = new ExitedState(this);
 
-            state = processingState; // Initial state: Processing
+            state = ProcessingState; // Initial state: Processing
 
         }
 
