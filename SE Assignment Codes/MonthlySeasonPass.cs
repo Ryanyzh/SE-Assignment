@@ -7,14 +7,6 @@ namespace SE_Assignment_Codes
 {
 	class MonthlySeasonPass : SeasonPass
 	{
-<<<<<<< HEAD
-		private static int monthlySeasonPassAvailable;
-		private static List<User> waitingList = new List<User>();
-        public MonthlySeasonPass(int passNumber, User user, DateTime startMonth, DateTime endMonth, string paymentMode, Vehicle vehicle, string type)
-            : base(passNumber, user, startMonth, endMonth, paymentMode, vehicle, type)
-		{
-			monthlySeasonPassAvailable = 50;
-=======
 		// Static variable representing the total number of monthly passes
 		private static int monthlySeasonPassTotal = 10;
 
@@ -35,7 +27,6 @@ namespace SE_Assignment_Codes
 		{
 			// Update the number of available monthly passes after creating a new pass
 			monthlySeasonPassAvailable = FetchAvailableMonthlyPasses();
->>>>>>> 209dd3272245e10b7b578d69b606468d1f278fcd
 		}
 		public void addSeasonPass()
 		{

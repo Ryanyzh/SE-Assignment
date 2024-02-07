@@ -454,12 +454,4 @@ class Program
         Console.WriteLine("GenerateFinancialReport...");
         // Your implementation for option 4 goes here
     }
-<<<<<<< HEAD
 }
-=======
-
-
-    //Sub-functions
-
-}
->>>>>>> 209dd3272245e10b7b578d69b606468d1f278fcd
