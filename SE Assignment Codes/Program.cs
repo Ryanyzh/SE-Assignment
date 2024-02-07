@@ -246,13 +246,39 @@ class Program
         Console.WriteLine($"Season Pass Type: {passType}");
         Console.WriteLine($"Payment Mode: {paymentMode}");
 
+
+        if (MonthlySeasonPass.GetNumberOfMonthlyPassAvailable() == 0)
+        {
+            Console.WriteLine("Monthly passes are currently unavailable. Would you like to be added to the waiting list (Y/N)?");
+            string waititngList = Console.ReadLine();
+
+            if (waititngList.ToUpper() == "Y")
+            {
+                // Add user to the waiting list
+                MonthlySeasonPass.AddToWaitingList(user);
+                Console.WriteLine("You have been added to the waiting list.");
+            }
+            else
+            {
+                Console.WriteLine("Leaving....");
+                return;
+            }
+                
+        }
+        else
+        { 
+            // add the rest of the implementation here
+        }
+
         Console.Write("\nProceed with payment (Y/N)? ");
         string proceed = Console.ReadLine();
 
         if (proceed.ToUpper() == "Y")
         {
             // Payment verification (mock implementation)
-            Console.WriteLine("Payment received. Updating status to 'Payment Received'...");
+            Console.WriteLine("Payment received....");
+
+            // add to waiting list code here
 
             // Create and process the season pass application
             SeasonPass seasonPass = new SeasonPass(0, user, startMonth, endMonth, paymentMode, vehicle, passType);
