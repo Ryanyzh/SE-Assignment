@@ -13,15 +13,17 @@ namespace SE_Assignment_Codes
         public string Username { get; set; }
         public string Password { get; set; }
         public string MobileNumber { get; set; }
+        public string UserType { get; set; }
 
         // Constructor
-        public User(string name, string id, string username, string password, string mobileNumber)
+        public User(string name, string id, string username, string password, string mobileNumber, string userType)
         {
             Name = name;
             ID = id;
             Username = username;
             Password = password;
             MobileNumber = mobileNumber;
+            UserType = userType;
         }
 
         // Method to provide user's name
@@ -34,6 +36,12 @@ namespace SE_Assignment_Codes
         public string IdentifyUser()
         {
             return $"{Name} ({ID})";
+        }
+
+        public string saveUserDetails()
+        {
+            return $"{{Name: {Name}, ID: {ID}, Username: {Username}, Password: {Password}, MobileNumber: {MobileNumber}, UserType: {UserType}}}";
+
         }
     }
 }
