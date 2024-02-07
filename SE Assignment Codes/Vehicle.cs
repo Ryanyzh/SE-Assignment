@@ -31,5 +31,10 @@ namespace SE_Assignment_Codes
         {
             return $"{LicensePlateNumber} ({VehicleType})";
         }
+
+        public string saveVehicleDetails()
+        {
+            return $"{{LicensePlateNumber: {LicensePlateNumber}, IUNumber: {IUNumber}, VehicleType: {VehicleType}}}";
+        }
     }
 }
