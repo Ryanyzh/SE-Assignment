@@ -2,7 +2,13 @@
 using System.IO;
 using System.Xml.Linq;
 using SE_Assignment_Codes;
+using System.Collections.Generic;
+using System.IO;
 
+public class Global
+{
+    static List<SeasonPass> seasonpass = new List<SeasonPass>();
+}
 
 class Program
 {
@@ -16,6 +22,16 @@ class Program
         MonthlySeasonPass seasonPass = new MonthlySeasonPass(0, user, sd, ed, "DollaDollaBills", vehicle, "Monthly", 50);
         seasonPass.subtractSeasonPass();
 
+<<<<<<< HEAD
+            while (true)
+            {
+                Console.WriteLine("Parking Management System Menu:");
+                Console.WriteLine("1. Apply for new season pass");
+                Console.WriteLine("2. Process season pass application");
+                Console.WriteLine("3. Terminate season pass");
+                Console.WriteLine("4. Generate Financial Report");
+                Console.WriteLine("0. Exit");
+=======
 
         // Get the directory where the executable is located
         string directory = AppDomain.CurrentDomain.BaseDirectory;
@@ -35,9 +51,10 @@ class Program
             Console.WriteLine("3. Terminate season pass");
             Console.WriteLine("4. Generate Financial Report");
             Console.WriteLine("0. Exit");
+>>>>>>> origin
 
-            Console.Write("Enter your choice: ");
-            string choice = Console.ReadLine();
+                Console.Write("Enter your choice: ");
+                string choice = Console.ReadLine();
 
             switch (choice)
             {
@@ -45,26 +62,26 @@ class Program
                     ApplyForNewSeasonPass();
                     break;
 
-                case "2":
-                    ProcessSeasonPassApplication();
-                    break;
+                    case "2":
+                        ProcessSeasonPassApplication();
+                        break;
 
                 case "3":
                     TerminateSeasonPass(seasonPass);
                     break;
 
-                case "4":
-                    GenerateFinancialReport();
-                    break;
+                    case "4":
+                        GenerateFinancialReport();
+                        break;
 
-                case "0":
-                    Console.WriteLine("Exiting the program. Goodbye!");
-                    return;
+                    case "0":
+                        Console.WriteLine("Exiting the program. Goodbye!");
+                        return;
 
-                default:
-                    Console.WriteLine("Invalid choice. Please enter a valid option.");
-                    break;
-            }
+                    default:
+                        Console.WriteLine("Invalid choice. Please enter a valid option.");
+                        break;
+                }
 
             Console.WriteLine(); // Add a line break for better readability
         }
@@ -371,8 +388,8 @@ class Program
 
     public static void ProcessSeasonPassApplication()
     {
-        Console.WriteLine("Executing Process season pass application function...");
-        // Your implementation for option 2 goes here
+        Console.WriteLine();
+
     }
 
     public static void TerminateSeasonPass(MonthlySeasonPass seasonPass)
@@ -425,4 +442,8 @@ class Program
         Console.WriteLine("GenerateFinancialReport...");
         // Your implementation for option 4 goes here
     }
+
+
+    //Sub-functions
+
 }
