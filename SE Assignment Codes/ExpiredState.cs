@@ -33,8 +33,7 @@ namespace SE_Assignment_Codes
 
         public void Terminate(string reason)
         {
-            Console.WriteLine($"Terminating the expired season pass: {reason}");
-            seasonPass.State = seasonPass.TerminatedState;
+            Console.WriteLine($"Season pass has been expired and cannot be terminated: {reason}");
         }
 
         public void TransferToVehicle(Vehicle newVehicle)

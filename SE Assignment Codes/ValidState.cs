@@ -35,8 +35,6 @@ namespace SE_Assignment_Codes
         {
             Console.WriteLine($"Terminating the season pass: {reason}");
             seasonPass.State = seasonPass.TerminatedState;
-            
-
         }
 
         public void TransferToVehicle(Vehicle newVehicle)
