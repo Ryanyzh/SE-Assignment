@@ -37,5 +37,11 @@ namespace SE_Assignment_Codes
         {
             return $"{Name} ({ID})";
         }
+
+        public string saveUserDetails()
+        {
+            return $"{{Name: {Name}, ID: {ID}, Username: {Username}, Password: {Password}, MobileNumber: {MobileNumber}, UserType: {UserType}}}";
+
+        }
     }
 }
