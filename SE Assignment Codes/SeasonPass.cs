@@ -21,16 +21,6 @@ namespace SE_Assignment_Codes
         // State
         private SeasonPassState state;
 
-        private SeasonPassState processingState;
-
-        private SeasonPassState validState;
-
-        private SeasonPassState expiredState;
-
-        private SeasonPassState terminatedState;
-
-        private ExitedState exitedState;
-
         public SeasonPassState ProcessingState { get; set; }
         public SeasonPassState ValidState { get; set; }
         public SeasonPassState ExpiredState { get; set; }
@@ -55,7 +45,6 @@ namespace SE_Assignment_Codes
             ExitedState = new ExitedState(this);
 
             state = ProcessingState; // Initial state: Processing
-
         }
 
         public void Apply()
@@ -100,15 +89,6 @@ namespace SE_Assignment_Codes
         {
             // Logic to calculate parking charge
             return 0.0; // Sample implementation
-        }
-
-        // Method to refund unused months
-        public double RefundUnusedMonths()
-        {
-            int remainingMonths = ((EndMonth.Year - DateTime.Now.Year) * 12) + EndMonth.Month - DateTime.Now.Month; //Check if the end date includes that month
-            double amountRefunded = remainingMonths * 150; //Assume that each month costs $150
-            // Logic to refund unused months
-            return amountRefunded; // Sample implementation
         }
     }
 }

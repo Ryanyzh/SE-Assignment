@@ -5,12 +5,12 @@ namespace SE_Assignment_Codes
 {
 	class MonthlySeasonPass : SeasonPass
 	{
-        private static int monthlySeasonPassAvailable { get; set; }
-		private static List<User> waitingList { get; set; } = new List<User>();
-        public MonthlySeasonPass(int passNumber, User user, DateTime startMonth, DateTime endMonth, string paymentMode, Vehicle vehicle, string type, int value)
+		private static int monthlySeasonPassAvailable;
+		private static List<User> waitingList = new List<User>();
+        public MonthlySeasonPass(int passNumber, User user, DateTime startMonth, DateTime endMonth, string paymentMode, Vehicle vehicle, string type)
             : base(passNumber, user, startMonth, endMonth, paymentMode, vehicle, type)
 		{
-			monthlySeasonPassAvailable = value;
+			monthlySeasonPassAvailable = 50;
 		}
 		public void addSeasonPass()
 		{
@@ -19,10 +19,6 @@ namespace SE_Assignment_Codes
 		public void subtractSeasonPass()
 		{
 			monthlySeasonPassAvailable -= 1;
-		}
-		public int test()
-		{
-			return monthlySeasonPassAvailable;
 		}
 
 		// Method to fetch initial number of available passes from a database or other data source
@@ -42,6 +38,15 @@ namespace SE_Assignment_Codes
 		{
 			waitingList.Add(user);
 		}
-	}
+
+        // Method to refund unused months
+        public void RefundUnusedMonths()
+        {
+            int remainingMonths = ((EndMonth.Year - DateTime.Now.Year) * 12) + EndMonth.Month - DateTime.Now.Month; //Check if the end date includes that month
+            double amountRefunded = remainingMonths * 150; //Assume that each month costs $150
+            Console.WriteLine($"A refund of ${amountRefunded} has been sent to your account");
+            this.addSeasonPass();
+        }
+    }
 }
 

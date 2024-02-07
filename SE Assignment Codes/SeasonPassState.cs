@@ -11,7 +11,7 @@ namespace SE_Assignment_Codes
         void Apply();
         void Renew();
         void Expire();
-        void Terminate(string reason);
+        void Terminate(string reason); //possibly 
         void TransferToVehicle(Vehicle newVehicle);
     }
 }

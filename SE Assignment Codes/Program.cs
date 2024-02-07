@@ -13,8 +13,17 @@ class Program
         Vehicle vehicle = new Vehicle("SHUAT999", "IAMBIGFANOFIU", "Plane");
         DateTime sd = DateTime.ParseExact("01/2003", "MM/yyyy", null);
         DateTime ed = DateTime.ParseExact("07/2024", "MM/yyyy", null);
-        MonthlySeasonPass seasonPass = new MonthlySeasonPass(0, user, sd, ed, "DollaDollaBills", vehicle, "Monthly", 50);
-        seasonPass.subtractSeasonPass();
+        SeasonPass seasonPass = new DailySessonPass(0, user, sd, ed, "DollaDollaBills", vehicle, "Monthly");
+        SeasonPass sp = null;
+        //if(typeof == "monthly")
+        //{
+        //    sp = new MonthlySeasonPass()
+        //}
+        //else if(typeof == "daily")
+        //{
+        //    sp = new DailySessonPass();
+        //}
+        //seasonPass.subtractSeasonPass();
 
 
         // Get the directory where the executable is located
@@ -24,8 +33,30 @@ class Program
         string filePath = Path.Combine(directory, "SeasonPass.txt");
 
         // Display the full path
-        Console.WriteLine($"The SeasonPass.txt file is located at: {filePath}");
+        //Console.WriteLine($"The SeasonPass.txt file is located at: {filePath}");
+        try
+        {
+            using (StreamReader sr = new StreamReader(filePath))
+            {
+                string line;
+                while((line = sr.ReadLine()) != null)
+                {
+                    string[] keyValuePairs = line.Split(',');
 
+                    foreach(string pair in keyValuePairs)
+                    {
+                        string[] parts = pair.Trim().Split(':');
+                        string key = parts[0].Trim();
+                        string value = parts[1].Trim();
+
+                    }
+                }
+            }
+        }
+        catch
+        {
+
+        }
 
         while (true)
         {
@@ -354,7 +385,7 @@ class Program
         // Your implementation for option 2 goes here
     }
 
-    public static void TerminateSeasonPass(MonthlySeasonPass seasonPass)
+    public static void TerminateSeasonPass(SeasonPass seasonPass)
     {
         //For testing
 
@@ -369,7 +400,6 @@ class Program
             {
                 Console.Write("Confirm that you want to terminate season pass\n[1]Yes [2] No\nEnter option:");
                 cancel = Int32.Parse(Console.ReadLine());
-                Console.WriteLine(cancel);
             }
             catch
             {
@@ -381,22 +411,15 @@ class Program
             Console.Write("Enter your reason for cancelling: ");
             string response = Console.ReadLine();
             seasonPass.Terminate(response);
-            //seasonPass.setState(seasonPass.ExpiredState);
-            if (seasonPass.Type == "Monthly") //Refund
+            if (seasonPass is MonthlySeasonPass && seasonPass.State.GetType().ToString() == "SE_Assignment_Codes.TerminatedState")
             {
-                double amtRefunded = seasonPass.RefundUnusedMonths();
-                Console.WriteLine($"A refund of ${amtRefunded} has been sent to your account");
-                seasonPass.addSeasonPass();
+                ((MonthlySeasonPass)seasonPass).RefundUnusedMonths();
             }
-            Console.WriteLine("Season pass HAS BEEN cancelled\n");
-
         }
         else if (cancel == 2)
         {
             Console.WriteLine("Season pass was NOT cancelled\n");
         }
-        //Console.WriteLine("TerminateSeasonPass...");
-        // Your implementation for option 3 goes here
     }
 
     public static void GenerateFinancialReport()
