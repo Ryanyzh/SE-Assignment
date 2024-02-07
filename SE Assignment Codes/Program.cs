@@ -22,16 +22,6 @@ class Program
         MonthlySeasonPass seasonPass = new MonthlySeasonPass(0, user, sd, ed, "DollaDollaBills", vehicle, "Monthly", 50);
         seasonPass.subtractSeasonPass();
 
-<<<<<<< HEAD
-            while (true)
-            {
-                Console.WriteLine("Parking Management System Menu:");
-                Console.WriteLine("1. Apply for new season pass");
-                Console.WriteLine("2. Process season pass application");
-                Console.WriteLine("3. Terminate season pass");
-                Console.WriteLine("4. Generate Financial Report");
-                Console.WriteLine("0. Exit");
-=======
 
         // Get the directory where the executable is located
         string directory = AppDomain.CurrentDomain.BaseDirectory;
@@ -51,10 +41,9 @@ class Program
             Console.WriteLine("3. Terminate season pass");
             Console.WriteLine("4. Generate Financial Report");
             Console.WriteLine("0. Exit");
->>>>>>> origin
 
-                Console.Write("Enter your choice: ");
-                string choice = Console.ReadLine();
+            Console.Write("Enter your choice: ");
+            string choice = Console.ReadLine();
 
             switch (choice)
             {
