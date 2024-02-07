@@ -12,6 +12,7 @@ public class Global
 
 class Program
 {
+
     static void Main()
     {
         //Replace with csv reader 
@@ -428,11 +429,71 @@ class Program
 
     public static void GenerateFinancialReport()
     {
-        Console.WriteLine("GenerateFinancialReport...");
-        // Your implementation for option 4 goes here
+
+        DateTime targetMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+        DateTime earliestMonthReport = new DateTime(DateTime.Now.Year - 2, DateTime.Now.Month, 1);
+
+        while (targetMonth != earliestMonthReport)
+        {
+            Report report = GenerateMonthlyReport(targetMonth);
+            report.OutputReport();
+
+            targetMonth = targetMonth.AddMonths(-1);
+
+            while (true)
+            {
+                Console.Write("Generate report for the month before (" + targetMonth.ToString("MMMM yyyy") + ") [Y/N]? ");
+                string response = Console.ReadLine().ToLower();
+
+                if (response == "y")
+                {
+                    break;
+                }
+                else if (response == "n")
+                {
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("Try again.");
+                }
+            }
+
+        }
     }
 
+    public static Report GenerateMonthlyReport(DateTime month)
+    {
+        
+        var iterator = ConcreteAggregate.Shared.CreateIterator();
 
-    //Sub-functions
+        int staffParkingRecords = 0;
+        int studentParkingRecords = 0;
+        double staffParkingRecordsRevenue = 0;
+        double studentParkingRecordsRevenue = 0;
 
+        while (iterator.HasNext())
+        {
+            var record = (ParkingRecord)iterator.Next();
+
+            if (record.EntryDateTime.Month == month.Month && record.EntryDateTime.Year == month.Year)
+            {
+                if (record.IsStaffRecord) {
+                    staffParkingRecordsRevenue += record.AmountCharged;
+                    staffParkingRecords++;
+                }
+                else
+                {
+                    studentParkingRecordsRevenue += record.AmountCharged;
+                    studentParkingRecords++;
+                }
+            }
+            else if (month > record.EntryDateTime)
+            {
+                break;
+            }
+        }
+
+        return new Report(month, staffParkingRecords, studentParkingRecords, staffParkingRecordsRevenue, studentParkingRecordsRevenue);
+    }
 }
