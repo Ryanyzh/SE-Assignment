@@ -1,3 +1,0 @@
-SeasonPassId: 0,User: SE_Assignment_Codes.User,Vehicle: SE_Assignment_Codes.Vehicle,StartMonth: 1/2/2024 12:00:00 am,EndMonth: 1/4/2024 12:00:00 am,SeasonPassState: SE_Assignment_Codes.ProcessingState,PassType: Monthly,PaymentMode: Debit Card,
-SeasonPassId: 0,User: SE_Assignment_Codes.User,Vehicle: SE_Assignment_Codes.Vehicle,StartMonth: 1/2/2024 12:00:00 am,EndMonth: 1/4/2024 12:00:00 am,SeasonPassState: SE_Assignment_Codes.ProcessingState,PassType: Monthly,PaymentMode: Debit Card,
-SeasonPassId: 0,User: SE_Assignment_Codes.User,Vehicle: SE_Assignment_Codes.Vehicle,StartMonth: 1/2/2024 12:00:00 am,EndMonth: 1/4/2024 12:00:00 am,SeasonPassState: SE_Assignment_Codes.ProcessingState,PassType: Monthly,PaymentMode: Debit Card,

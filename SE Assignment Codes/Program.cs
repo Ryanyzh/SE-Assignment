@@ -2,7 +2,13 @@
 using System.IO;
 using System.Xml.Linq;
 using SE_Assignment_Codes;
+using System.Collections.Generic;
+using System.IO;
 
+public class Global
+{
+    static List<SeasonPass> seasonpass = new List<SeasonPass>();
+}
 
 class Program
 {
@@ -76,26 +82,26 @@ class Program
                     ApplyForNewSeasonPass();
                     break;
 
-                case "2":
-                    ProcessSeasonPassApplication();
-                    break;
+                    case "2":
+                        ProcessSeasonPassApplication();
+                        break;
 
                 case "3":
                     TerminateSeasonPass(seasonPass);
                     break;
 
-                case "4":
-                    GenerateFinancialReport();
-                    break;
+                    case "4":
+                        GenerateFinancialReport();
+                        break;
 
-                case "0":
-                    Console.WriteLine("Exiting the program. Goodbye!");
-                    return;
+                    case "0":
+                        Console.WriteLine("Exiting the program. Goodbye!");
+                        return;
 
-                default:
-                    Console.WriteLine("Invalid choice. Please enter a valid option.");
-                    break;
-            }
+                    default:
+                        Console.WriteLine("Invalid choice. Please enter a valid option.");
+                        break;
+                }
 
             Console.WriteLine(); // Add a line break for better readability
         }
@@ -192,11 +198,33 @@ class Program
 
         Console.Write("Enter start month (MM/YYYY): ");
         string startMonthStr = Console.ReadLine();
-        DateTime startMonth = DateTime.ParseExact(startMonthStr, "MM/yyyy", null);
+        DateTime startMonth;
+
+        // Keep prompting the user until the input is in the correct format
+        while (!DateTime.TryParseExact(startMonthStr, "MM/yyyy", null, System.Globalization.DateTimeStyles.None, out startMonth))
+        {
+            // Inform the user about the incorrect format
+            Console.WriteLine("Invalid format. Please enter the start month in MM/YYYY format.");
+
+            // Prompt the user again for input
+            Console.Write("Enter start month (MM/YYYY): ");
+            startMonthStr = Console.ReadLine();
+        }
 
         Console.Write("Enter end month (MM/YYYY): ");
         string endMonthStr = Console.ReadLine();
-        DateTime endMonth = DateTime.ParseExact(endMonthStr, "MM/yyyy", null);
+        DateTime endMonth;
+
+        // Keep prompting the user until the input is in the correct format
+        while (!DateTime.TryParseExact(endMonthStr, "MM/yyyy", null, System.Globalization.DateTimeStyles.None, out endMonth))
+        {
+            // Inform the user about the incorrect format
+            Console.WriteLine("Invalid format. Please enter the end month in MM/YYYY format.");
+
+            // Prompt the user again for input
+            Console.Write("Enter end month (MM/YYYY): ");
+            endMonthStr = Console.ReadLine();
+        }
 
         //Console.Write("Enter season pass type: ");
         //string passType = Console.ReadLine();
@@ -277,10 +305,10 @@ class Program
         Console.WriteLine($"Season Pass Type: {passType}");
         Console.WriteLine($"Payment Mode: {paymentMode}");
 
-
-        if (MonthlySeasonPass.GetNumberOfMonthlyPassAvailable() == 0)
+        Console.WriteLine(MonthlySeasonPass.GetNumberOfMonthlyPassAvailable());
+        if (MonthlySeasonPass.GetNumberOfMonthlyPassAvailable() <= 0)
         {
-            Console.WriteLine("Monthly passes are currently unavailable. Would you like to be added to the waiting list (Y/N)?");
+            Console.Write("Monthly passes are currently unavailable. Would you like to be added to the waiting list (Y/N)?");
             string waititngList = Console.ReadLine();
 
             if (waititngList.ToUpper() == "Y")
@@ -291,45 +319,44 @@ class Program
             }
             else
             {
-                Console.WriteLine("Leaving....");
+                Console.WriteLine("Returning to the main menu...");
                 return;
             }
                 
         }
         else
-        { 
-            // add the rest of the implementation here
-        }
-
-        Console.Write("\nProceed with payment (Y/N)? ");
-        string proceed = Console.ReadLine();
-
-        if (proceed.ToUpper() == "Y")
         {
-            // Payment verification (mock implementation)
-            Console.WriteLine("Payment received....");
+            Console.Write("\nProceed with payment (Y/N)? ");
+            string proceed = Console.ReadLine();
 
-            // add to waiting list code here
+            if (proceed.ToUpper() == "Y")
+            {
+                // Payment verification (mock implementation)
+                Console.WriteLine("Payment received....");
 
-            // Create and process the season pass application
-            SeasonPass seasonPass = new SeasonPass(0, user, startMonth, endMonth, paymentMode, vehicle, passType);
+                // Create and process the season pass application
+                SeasonPass seasonPass = new SeasonPass(0, user, startMonth, endMonth, paymentMode, vehicle, passType);
 
-            // Write full SeasonPass details to the file
-            WriteToSeasonPassFile(seasonPass);
+                // Write full SeasonPass details to the file
+                WriteToSeasonPassFile(seasonPass);
 
-            Console.WriteLine($"Season Pass State: {seasonPass.State}");
+                Console.WriteLine($"Season Pass State: {seasonPass.State}");
 
-            // Update status to 'processing'
-            seasonPass.Apply();
+                // Update status to 'processing'
+                // seasonPass.Apply();
 
-            Console.WriteLine($"Season Pass State: {seasonPass.State}");
+                Console.WriteLine($"Season Pass State: {seasonPass.State}");
 
-            Console.WriteLine("Season pass application submitted successfully.");
+                Console.WriteLine("Season pass application submitted successfully.");
+            }
+            else
+            {
+                Console.WriteLine("Season pass application cancelled.");
+                return;
+            }
         }
-        else
-        {
-            Console.WriteLine("Season pass application cancelled.");
-        }
+
+        
     }
 
 
@@ -359,13 +386,13 @@ class Program
 
 
                 sw.Write($"SeasonPassId: {seasonPass.PassNumber},");
-                sw.Write($"User: {seasonPass.User},");
-                sw.Write($"Vehicle: {seasonPass.Vehicle},");
+                sw.Write($"User: {seasonPass.User.saveUserDetails()},");
+                sw.Write($"Vehicle: {seasonPass.Vehicle.saveVehicleDetails()},");
                 sw.Write($"StartMonth: {seasonPass.StartMonth},");
                 sw.Write($"EndMonth: {seasonPass.EndMonth},");
                 sw.Write($"SeasonPassState: {seasonPass.State},");
                 sw.Write($"PassType: {seasonPass.Type},");
-                sw.Write($"PaymentMode: {seasonPass.PaymentMode},");
+                sw.Write($"PaymentMode: {seasonPass.PaymentMode}");
                 sw.WriteLine(); // Add an empty line for better readability
             }
 
@@ -381,8 +408,8 @@ class Program
 
     public static void ProcessSeasonPassApplication()
     {
-        Console.WriteLine("Executing Process season pass application function...");
-        // Your implementation for option 2 goes here
+        Console.WriteLine();
+
     }
 
     public static void TerminateSeasonPass(SeasonPass seasonPass)
@@ -427,4 +454,12 @@ class Program
         Console.WriteLine("GenerateFinancialReport...");
         // Your implementation for option 4 goes here
     }
+<<<<<<< HEAD
 }
+=======
+
+
+    //Sub-functions
+
+}
+>>>>>>> 209dd3272245e10b7b578d69b606468d1f278fcd
