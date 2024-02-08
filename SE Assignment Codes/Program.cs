@@ -4,6 +4,8 @@ using System.Xml.Linq;
 using SE_Assignment_Codes;
 using System.Collections.Generic;
 using System.IO;
+using System.Diagnostics;
+using System.Runtime.ConstrainedExecution;
 
 public class Global
 {
@@ -16,13 +18,8 @@ class Program
     static void Main()
     {
         //Replace with csv reader 
-        User user = new User("Hong Wei", "S1020927J", "S10203927", "TheLowLowLow", "81176336", "Student");
-        Vehicle vehicle = new Vehicle("SHUAT999", "IAMBIGFANOFIU", "Plane");
-        DateTime sd = DateTime.ParseExact("01/2003", "MM/yyyy", null);
-        DateTime ed = DateTime.ParseExact("07/2024", "MM/yyyy", null);
-        MonthlySeasonPass seasonPass = new MonthlySeasonPass(0, user, sd, ed, "DollaDollaBills", vehicle, "Monthly", 50);
-        seasonPass.subtractSeasonPass();
-
+        SeasonPass seasonPass = null;
+        
 
         // Get the directory where the executable is located
         string directory = AppDomain.CurrentDomain.BaseDirectory;
@@ -31,8 +28,19 @@ class Program
         string filePath = Path.Combine(directory, "SeasonPass.txt");
 
         // Display the full path
-        Console.WriteLine($"The SeasonPass.txt file is located at: {filePath}");
-
+        //Console.WriteLine($"The SeasonPass.txt file is located at: {filePath}");
+        try
+        {
+            using (StreamReader sr = new StreamReader(filePath))
+            {
+                string line = sr.ReadLine();
+                seasonPass = ProcessSeasonPassDetails(line);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
 
         while (true)
         {
@@ -49,7 +57,7 @@ class Program
             switch (choice)
             {
                 case "1":
-                    ApplyForNewSeasonPass();
+                    ApplyForNewSeasonPass(seasonPass);
                     break;
 
                     case "2":
@@ -76,8 +84,64 @@ class Program
             Console.WriteLine(); // Add a line break for better readability
         }
     }
+    public static SeasonPass ProcessSeasonPassDetails(string line)
+    {
+        SeasonPass seasonPass = null;
+        try
+        {
+            string[] keyValuePairs = line.Split(',');
+            string seasonPassId = getValueFromKey(keyValuePairs[0]);
+            string username = getValueFromKey(keyValuePairs[1]);
+            string pass = getValueFromKey(keyValuePairs[2]);
+            string name = getValueFromKey(keyValuePairs[3]);
+            string uId = getValueFromKey(keyValuePairs[4]);
+            string mobile = getValueFromKey(keyValuePairs[5]);
+            string lp = getValueFromKey(keyValuePairs[6]);
+            string iu = getValueFromKey(keyValuePairs[7]);
+            string vt = getValueFromKey(keyValuePairs[8]);
+            string sm = getValueFromKey(keyValuePairs[9]).Substring(0, getValueFromKey(keyValuePairs[9]).LastIndexOf('/'));
+            string em = getValueFromKey(keyValuePairs[10]).Substring(0, getValueFromKey(keyValuePairs[10]).LastIndexOf('/'));
+            string seasonPassState = getValueFromKey(keyValuePairs[11]);
+            string pt = getValueFromKey(keyValuePairs[12]);
+            string pm = getValueFromKey(keyValuePairs[13]);
+            string ut = getValueFromKey(keyValuePairs[14]);
 
-    public static void ApplyForNewSeasonPass()
+
+            User loadedUser = new User(name,uId,username, pass, mobile, ut);
+            Vehicle loadedVehicle = new Vehicle(lp, iu, vt);
+
+            if (pt == "Monthly")
+            {
+                seasonPass = new MonthlySeasonPass(Int32.Parse(seasonPassId), loadedUser, DateTime.Parse(sm), DateTime.Parse(em), pm, loadedVehicle, pt);
+                if (seasonPassState == "SE_Assignment_Codes.ProcessingState") { seasonPass.State = seasonPass.ProcessingState; }
+                else if (seasonPassState == "SE_Assignment_Codes.TerminatedState") { seasonPass.State = seasonPass.TerminatedState; }
+                else if (seasonPassState == "SE_Assignment_Codes.ValidState") { seasonPass.State = seasonPass.ValidState; }
+                else if (seasonPassState == "SE_Assignment_Codes.ExpiredState") { seasonPass.State = seasonPass.ExpiredState; }
+            }
+            else
+            {
+                seasonPass = new DailySessonPass(Int32.Parse(seasonPassId), loadedUser, DateTime.Parse(sm), DateTime.Parse(em), pm, loadedVehicle, pt);
+                if (seasonPassState == "SE_Assignment_Codes.ProcessingState") { seasonPass.State = seasonPass.ProcessingState; }
+                else if (seasonPassState == "SE_Assignment_Codes.TerminatedState") { seasonPass.State = seasonPass.TerminatedState; }
+                else if (seasonPassState == "SE_Assignment_Codes.ValidState") { seasonPass.State = seasonPass.ValidState; }
+                else if (seasonPassState == "SE_Assignment_Codes.ExpiredState") { seasonPass.State = seasonPass.ExpiredState; }
+            }
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+        return seasonPass;
+    }
+
+    public static string getValueFromKey(string keyAndValue)
+    {
+        string[] value = keyAndValue.Split(':');
+        return value[1].Trim();
+    }
+
+    public static void ApplyForNewSeasonPass(SeasonPass seasonPass)
     {
         Console.WriteLine("Applying for a new season pass...");
 
@@ -305,7 +369,7 @@ class Program
                 Console.WriteLine("Payment received....");
 
                 // Create and process the season pass application
-                SeasonPass seasonPass = new SeasonPass(0, user, startMonth, endMonth, paymentMode, vehicle, passType);
+                seasonPass = new SeasonPass(0, user, startMonth, endMonth, paymentMode, vehicle, passType);
 
                 // Write full SeasonPass details to the file
                 WriteToSeasonPassFile(seasonPass);
@@ -338,32 +402,32 @@ class Program
             // Append the new season pass details to the file
             using (StreamWriter sw = File.AppendText("SeasonPass.txt"))
             {
-                //sw.Write($"SeasonPassId: {seasonPass.PassNumber},");
-                //sw.Write($"Username: {seasonPass.User.Username},");
-                //sw.Write($"Password: {seasonPass.User.Password},");
-                //sw.Write($"UserId: {seasonPass.User.ID},");
-                //sw.Write($"MobileNumber: {seasonPass.User.MobileNumber},");
-                //sw.Write($"LicensePlateNumber: {seasonPass.Vehicle.LicensePlateNumber},");
-                //sw.Write($"IUNumber: {seasonPass.Vehicle.IUNumber},");
-                //sw.Write($"VehicleType: {seasonPass.Vehicle.VehicleType},");
-                //sw.Write($"StartMonth: {seasonPass.StartMonth},");
-                //sw.Write($"EndMonth: {seasonPass.EndMonth},");
-                //sw.Write($"SeasonPassState: {seasonPass.State},");
-                //sw.Write($"PassType: {seasonPass.Type},");
-                //sw.Write($"PaymentMode: {seasonPass.PaymentMode},");
-                //sw.WriteLine(); // Add an empty line for better readability
-
-
-
                 sw.Write($"SeasonPassId: {seasonPass.PassNumber},");
-                sw.Write($"User: {seasonPass.User.saveUserDetails()},");
-                sw.Write($"Vehicle: {seasonPass.Vehicle.saveVehicleDetails()},");
+                sw.Write($"Username: {seasonPass.User.Username},");
+                sw.Write($"Password: {seasonPass.User.Password},");
+                sw.Write($"Name: {seasonPass.User.Name},");
+                sw.Write($"UserId: {seasonPass.User.ID},");
+                sw.Write($"MobileNumber: {seasonPass.User.MobileNumber},");
+                sw.Write($"LicensePlateNumber: {seasonPass.Vehicle.LicensePlateNumber},");
+                sw.Write($"IUNumber: {seasonPass.Vehicle.IUNumber},");
+                sw.Write($"VehicleType: {seasonPass.Vehicle.VehicleType},");
                 sw.Write($"StartMonth: {seasonPass.StartMonth},");
                 sw.Write($"EndMonth: {seasonPass.EndMonth},");
                 sw.Write($"SeasonPassState: {seasonPass.State},");
                 sw.Write($"PassType: {seasonPass.Type},");
-                sw.Write($"PaymentMode: {seasonPass.PaymentMode}");
+                sw.Write($"PaymentMode: {seasonPass.PaymentMode},");
+                sw.Write($"UserType: {seasonPass.User.UserType},");
                 sw.WriteLine(); // Add an empty line for better readability
+
+                //sw.Write($"SeasonPassId: {seasonPass.PassNumber},");
+                //sw.Write($"User: {seasonPass.User.saveUserDetails()},");
+                //sw.Write($"Vehicle: {seasonPass.Vehicle.saveVehicleDetails()},");
+                //sw.Write($"StartMonth: {seasonPass.StartMonth},");
+                //sw.Write($"EndMonth: {seasonPass.EndMonth},");
+                //sw.Write($"SeasonPassState: {seasonPass.State},");
+                //sw.Write($"PassType: {seasonPass.Type},");
+                //sw.Write($"PaymentMode: {seasonPass.PaymentMode}");
+                //sw.WriteLine(); // Add an empty line for better readability
             }
 
             Console.WriteLine("SeasonPass details successfully written to the file.");
@@ -382,7 +446,7 @@ class Program
 
     }
 
-    public static void TerminateSeasonPass(MonthlySeasonPass seasonPass)
+    public static void TerminateSeasonPass(SeasonPass seasonPass)
     {
         //For testing
 
@@ -397,7 +461,6 @@ class Program
             {
                 Console.Write("Confirm that you want to terminate season pass\n[1]Yes [2] No\nEnter option:");
                 cancel = Int32.Parse(Console.ReadLine());
-                Console.WriteLine(cancel);
             }
             catch
             {
@@ -409,22 +472,15 @@ class Program
             Console.Write("Enter your reason for cancelling: ");
             string response = Console.ReadLine();
             seasonPass.Terminate(response);
-            //seasonPass.setState(seasonPass.ExpiredState);
-            if (seasonPass.Type == "Monthly") //Refund
+            if (seasonPass is MonthlySeasonPass && seasonPass.State.GetType().ToString() == "SE_Assignment_Codes.TerminatedState")
             {
-                double amtRefunded = seasonPass.RefundUnusedMonths();
-                Console.WriteLine($"A refund of ${amtRefunded} has been sent to your account");
-                seasonPass.addSeasonPass();
+                ((MonthlySeasonPass)seasonPass).RefundUnusedMonths();
             }
-            Console.WriteLine("Season pass HAS BEEN cancelled\n");
-
         }
         else if (cancel == 2)
         {
             Console.WriteLine("Season pass was NOT cancelled\n");
         }
-        //Console.WriteLine("TerminateSeasonPass...");
-        // Your implementation for option 3 goes here
     }
 
     public static void GenerateFinancialReport()
@@ -461,6 +517,7 @@ class Program
 
         }
     }
+
 
     public static Report GenerateMonthlyReport(DateTime month)
     {

@@ -22,7 +22,7 @@ namespace SE_Assignment_Codes
 			monthlySeasonPassAvailable = FetchAvailableMonthlyPasses();
 		}
 
-		public MonthlySeasonPass(int passNumber, User user, DateTime startMonth, DateTime endMonth, string paymentMode, Vehicle vehicle, string type, int value)
+		public MonthlySeasonPass(int passNumber, User user, DateTime startMonth, DateTime endMonth, string paymentMode, Vehicle vehicle, string type)
             : base(passNumber, user, startMonth, endMonth, paymentMode, vehicle, type)
 		{
 			// Update the number of available monthly passes after creating a new pass
@@ -36,11 +36,6 @@ namespace SE_Assignment_Codes
 		{
 			monthlySeasonPassAvailable -= 1;
 		}
-		public int test()
-		{
-			return monthlySeasonPassAvailable;
-		}
-
 
 		// Method to fetch the number of available monthly passes from SeasonPass.txt
 		private static int FetchAvailableMonthlyPasses()
@@ -88,6 +83,15 @@ namespace SE_Assignment_Codes
 				Console.WriteLine($"An error occurred while adding user to the waiting list: {ex.Message}");
 			}
 		}
-	}
+
+        // Method to refund unused months
+        public void RefundUnusedMonths()
+        {
+            int remainingMonths = ((EndMonth.Year - DateTime.Now.Year) * 12) + EndMonth.Month - DateTime.Now.Month; //Check if the end date includes that month
+            double amountRefunded = remainingMonths * 150; //Assume that each month costs $150
+            Console.WriteLine($"A refund of ${amountRefunded} has been sent to your account");
+            this.addSeasonPass();
+        }
+    }
 }
 
