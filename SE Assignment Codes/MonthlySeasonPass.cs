@@ -14,6 +14,8 @@ namespace SE_Assignment_Codes
 		// Static variable representing the number of available monthly passes
 		private static int monthlySeasonPassAvailable;
 
+		public bool refundedPass = false;
+
 		private static List<User> WaitingList { get; } = new List<User>();
 
 		// Static constructor to initialize the number of available passes from the file
@@ -93,6 +95,7 @@ namespace SE_Assignment_Codes
             double amountRefunded = remainingMonths * 150; //Assume that each month costs $150
             Console.WriteLine($"A refund of ${amountRefunded} has been sent to your account");
             this.addSeasonPass();
+			this.refundedPass = true;
         }
     }
 }
