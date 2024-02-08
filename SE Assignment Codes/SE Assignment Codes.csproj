@@ -9,9 +9,14 @@
   <ItemGroup>
     <None Remove="parkingrecords.tsv" />
     <None Remove="parkingrecords.tsv" />
+    <None Remove="SeasonPass.txt" />
+    <None Remove="SeasonPass.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Update="parkingrecords.tsv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SeasonPass.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -19,5 +24,10 @@
     <EmbeddedResource Include="parkingrecords.tsv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SeasonPass.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

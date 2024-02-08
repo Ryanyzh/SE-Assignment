@@ -90,6 +90,7 @@ class Program
         try
         {
             string[] keyValuePairs = line.Split(',');
+
             string seasonPassId = getValueFromKey(keyValuePairs[0]);
             string username = getValueFromKey(keyValuePairs[1]);
             string pass = getValueFromKey(keyValuePairs[2]);
