@@ -63,6 +63,7 @@ namespace SE_Assignment_Codes
 
 		public static int GetNumberOfMonthlyPassAvailable()
         {
+			monthlySeasonPassAvailable = FetchAvailableMonthlyPasses();
 			return monthlySeasonPassAvailable;
         }
 
