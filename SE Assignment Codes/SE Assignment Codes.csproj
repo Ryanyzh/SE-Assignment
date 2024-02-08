@@ -6,4 +6,18 @@
     <RootNamespace>SE_Assignment_Codes</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="parkingrecords.tsv" />
+    <None Remove="parkingrecords.tsv" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="parkingrecords.tsv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="parkingrecords.tsv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>

@@ -6,18 +6,23 @@ using System.Threading.Tasks;
 
 namespace SE_Assignment_Codes
 {
-    class ParkingRecord
+    public class ParkingRecord
     {
         public int RecordNumber { get; set; }
         public DateTime EntryDateTime { get; set; }
         public DateTime ExitDateTime { get; set; }
         public double AmountCharged { get; set; }
 
+        public bool IsStaffRecord { get; set; }
+
         // Constructor
-        public ParkingRecord(int recordNumber, DateTime entryDateTime)
+        public ParkingRecord(int recordNumber, DateTime entryDateTime, DateTime exitDateTime, double amountCharged, bool isStaffRecord)
         {
             RecordNumber = recordNumber;
             EntryDateTime = entryDateTime;
+            ExitDateTime = exitDateTime;
+            IsStaffRecord = isStaffRecord;
+            AmountCharged = amountCharged;
         }
 
         // Capture parking data
