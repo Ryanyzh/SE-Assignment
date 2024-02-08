@@ -8,7 +8,7 @@ namespace SE_Assignment_Codes
 	class MonthlySeasonPass : SeasonPass
 	{
 		// Static variable representing the total number of monthly passes
-		private static int monthlySeasonPassTotal = 10;
+		private static int monthlySeasonPassTotal = 8;
 
 		// Static variable representing the number of available monthly passes
 		private static int monthlySeasonPassAvailable;
