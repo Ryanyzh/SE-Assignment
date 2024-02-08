@@ -324,24 +324,10 @@ class Program
         // Create Vehicle object with collected details
         Vehicle vehicle = new Vehicle(licensePlateNumber, iuNumber, vehicleType);
 
-        // Confirm details
-        Console.WriteLine("\nConfirm details:");
-        Console.WriteLine("-------------------------------------------------");
-        Console.WriteLine($"Username: {user.Username}");
-        Console.WriteLine($"Password: {user.Password}");
-        Console.WriteLine($"Name: {user.Name}");
-        Console.WriteLine($"Student/Staff ID: {user.ID}");
-        Console.WriteLine($"Mobile Number: {user.MobileNumber}");
-        Console.WriteLine($"License Plate Number: {vehicle.LicensePlateNumber}");
-        Console.WriteLine($"IU Number: {vehicle.IUNumber}");
-        Console.WriteLine($"Vehicle Type: {vehicle.VehicleType}");
-        Console.WriteLine($"Start Month: {startMonth:MM/yyyy}");
-        Console.WriteLine($"End Month: {endMonth:MM/yyyy}");
-        Console.WriteLine($"Season Pass Type: {passType}");
-        Console.WriteLine($"Payment Mode: {paymentMode}");
+        
 
         Console.WriteLine(MonthlySeasonPass.GetNumberOfMonthlyPassAvailable());
-        if (MonthlySeasonPass.GetNumberOfMonthlyPassAvailable() <= 0)
+        if (passType=="Monthly" && MonthlySeasonPass.GetNumberOfMonthlyPassAvailable() <= 0)
         {
             Console.Write("Monthly passes are currently unavailable. Would you like to be added to the waiting list (Y/N)?");
             string waititngList = Console.ReadLine();
@@ -361,6 +347,23 @@ class Program
         }
         else
         {
+            // Confirm details
+            Console.WriteLine("\nConfirm details:");
+            Console.WriteLine("-------------------------------------------------");
+            Console.WriteLine($"Username: {user.Username}");
+            Console.WriteLine($"Password: {user.Password}");
+            Console.WriteLine($"Name: {user.Name}");
+            Console.WriteLine($"Student/Staff ID: {user.ID}");
+            Console.WriteLine($"Mobile Number: {user.MobileNumber}");
+            Console.WriteLine($"License Plate Number: {vehicle.LicensePlateNumber}");
+            Console.WriteLine($"IU Number: {vehicle.IUNumber}");
+            Console.WriteLine($"Vehicle Type: {vehicle.VehicleType}");
+            Console.WriteLine($"Start Month: {startMonth:MM/yyyy}");
+            Console.WriteLine($"End Month: {endMonth:MM/yyyy}");
+            Console.WriteLine($"Season Pass Type: {passType}");
+            Console.WriteLine($"Payment Mode: {paymentMode}");
+
+
             Console.Write("\nProceed with payment (Y/N)? ");
             string proceed = Console.ReadLine();
 
@@ -417,7 +420,7 @@ class Program
                 sw.Write($"SeasonPassState: {seasonPass.State},");
                 sw.Write($"PassType: {seasonPass.Type},");
                 sw.Write($"PaymentMode: {seasonPass.PaymentMode},");
-                sw.Write($"UserType: {seasonPass.User.UserType},");
+                sw.Write($"UserType: {seasonPass.User.UserType}");
                 sw.WriteLine(); // Add an empty line for better readability
 
                 //sw.Write($"SeasonPassId: {seasonPass.PassNumber},");
