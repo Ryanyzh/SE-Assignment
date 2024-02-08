@@ -497,6 +497,12 @@ class Program
 
             targetMonth = targetMonth.AddMonths(-1);
 
+            if (targetMonth == earliestMonthReport)
+            {
+                Console.Write("That is as far back as our records go!");
+                return;
+            }
+
             while (true)
             {
                 Console.Write("Generate report for the month before (" + targetMonth.ToString("MMMM yyyy") + ") [Y/N]? ");
