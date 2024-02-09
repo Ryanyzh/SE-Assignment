@@ -51,7 +51,7 @@ class Program
             switch (choice)
             {
                 case "1":
-                    ApplyForNewSeasonPass(seasonPass);
+                    ApplyForNewSeasonPass();
                     break;
 
                     case "2":
@@ -164,7 +164,7 @@ class Program
         return value[1].Trim();
     }
 
-    public static void ApplyForNewSeasonPass(SeasonPass seasonPass)
+    public static void ApplyForNewSeasonPass()
     {
         Console.WriteLine("Applying for a new season pass...");
 
@@ -386,7 +386,7 @@ class Program
                 Console.WriteLine("Payment received....");
 
                 // Create and process the season pass application
-                seasonPass = new SeasonPass(0, user, startMonth, endMonth, paymentMode, vehicle, passType);
+                SeasonPass seasonPass = new SeasonPass(0, user, startMonth, endMonth, paymentMode, vehicle, passType);
 
                 // Write full SeasonPass details to the file
                 WriteToSeasonPassFile(seasonPass);
