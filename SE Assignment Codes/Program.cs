@@ -478,7 +478,15 @@ class Program
             seasonPass.Terminate(response);
             if (seasonPass is MonthlySeasonPass && seasonPass.State.GetType().ToString() == "SE_Assignment_Codes.TerminatedState")
             {
-                ((MonthlySeasonPass)seasonPass).RefundUnusedMonths();
+                MonthlySeasonPass mp = (MonthlySeasonPass)seasonPass;
+                if (mp.refundedPass == false)
+                {
+                    mp.RefundUnusedMonths();
+                }
+                else
+                {
+                    Console.WriteLine("Pass has been refunded previously!");
+                }
             }
         }
         else if (cancel == 2)
