@@ -221,10 +221,6 @@ class Program
         Console.Write("Enter your IU number: ");
         string iuNumber = Console.ReadLine();
 
-        //Console.Write("Enter vehicle type: ");
-        //string vehicleType = Console.ReadLine();
-
-
         string vehicleType;
         while (true)
         {
@@ -283,9 +279,6 @@ class Program
             endMonthStr = Console.ReadLine();
         }
 
-        //Console.Write("Enter season pass type: ");
-        //string passType = Console.ReadLine();
-
         string passType;
         while (true)
         {
@@ -312,8 +305,6 @@ class Program
             }
         }
 
-        //Console.Write("Enter payment mode: ");
-        //string paymentMode = Console.ReadLine();
         string paymentMode;
         while (true)
         {
@@ -402,9 +393,6 @@ class Program
 
                 Console.WriteLine($"Season Pass State: {seasonPass.State}");
 
-                // Update status to 'processing'
-                // seasonPass.Apply();
-
                 Console.WriteLine($"Season Pass State: {seasonPass.State}");
 
                 Console.WriteLine("Season pass application submitted successfully.");
@@ -444,16 +432,6 @@ class Program
                 sw.Write($"PaymentMode: {seasonPass.PaymentMode},");
                 sw.Write($"UserType: {seasonPass.User.UserType}");
                 sw.WriteLine(); // Add an empty line for better readability
-
-                //sw.Write($"SeasonPassId: {seasonPass.PassNumber},");
-                //sw.Write($"User: {seasonPass.User.saveUserDetails()},");
-                //sw.Write($"Vehicle: {seasonPass.Vehicle.saveVehicleDetails()},");
-                //sw.Write($"StartMonth: {seasonPass.StartMonth},");
-                //sw.Write($"EndMonth: {seasonPass.EndMonth},");
-                //sw.Write($"SeasonPassState: {seasonPass.State},");
-                //sw.Write($"PassType: {seasonPass.Type},");
-                //sw.Write($"PaymentMode: {seasonPass.PaymentMode}");
-                //sw.WriteLine(); // Add an empty line for better readability
             }
 
             Console.WriteLine("SeasonPass details successfully written to the file.");
