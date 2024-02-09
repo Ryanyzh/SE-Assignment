@@ -615,8 +615,17 @@ class Program
                             //Change state to valid
                             if(ProcessAppOption == "1")
                             {
+                                Random random = new Random();                                
+                                int fiveDigitId = random.Next(10000, 100000); // Generate a random number between 10000 and 99999
+                                //Update state
                                 seasonPasses[processindexList[ProcessListOption - 1]].State = seasonPasses[processindexList[ProcessListOption - 1]].ValidState;
-                                MonthlySeasonPass.subtractSeasonPass();
+                                //Give seasonpass ID
+                                seasonPasses[processindexList[ProcessListOption - 1]].PassNumber = fiveDigitId;
+                                Console.WriteLine("\n");                                
+                                Console.WriteLine("Season pass number given: {0}", fiveDigitId);
+                                Console.WriteLine("\n");                                
+                                Console.WriteLine("Approval confirmed!");
+                                MonthlySeasonPass.subtractSeasonPass();                                
                                 break;
                             }
                             //Reamin in processing
