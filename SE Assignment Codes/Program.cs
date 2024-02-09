@@ -697,8 +697,36 @@ class Program
 
         while (targetMonth != earliestMonthReport)
         {
-            Report report = GenerateMonthlyReport(targetMonth);
-            report.OutputReport();
+            Aggregate aggregate = null;
+
+            while (aggregate == null)
+            {
+                Console.Write("Generate report for:\n  [1] Student\n  [2] Staff\n  [3] Everyone\n\n  [0] Exit\nEnter your choice: ");
+                string response = Console.ReadLine().ToLower();
+
+                switch (response)
+                {
+                    case "1":
+                        aggregate = new ByStudent();
+                        break;
+                    case "2":
+                        aggregate = new ByStaff();
+                        break;
+                    case "3":
+                        aggregate = new AllChanges();
+                        break;
+                    default:
+                        Console.WriteLine("Invalid input. Try again.");
+                        break;
+                }
+            }
+
+            string monthName = targetMonth.ToString("MMMM yyyy");
+            string aggregateType = aggregate.GetType().Name;
+
+            Console.WriteLine($"Report for {monthName}, {aggregateType}");
+
+            GenerateMonthlyReport(targetMonth, aggregate);
 
             targetMonth = targetMonth.AddMonths(-1);
 
@@ -715,7 +743,6 @@ class Program
 
                 if (response == "y")
                 {
-
                     break;
                 }
                 else if (response == "n")
@@ -731,16 +758,16 @@ class Program
         }
     }
 
-
-    public static Report GenerateMonthlyReport(DateTime month)
+    public static void GenerateMonthlyReport(DateTime month, Aggregate aggregate)
     {
         
-        var iterator = ConcreteAggregate.Shared.CreateIterator();
+        var iterator = aggregate.CreateIterator();
 
-        int staffParkingRecords = 0;
-        int studentParkingRecords = 0;
-        double staffParkingRecordsRevenue = 0;
-        double studentParkingRecordsRevenue = 0;
+        int records = 0;
+        double revenue = 0;
+
+        Console.WriteLine("Record No. | Role    | Entry Date/Time      | Exit Date/Time       | Amount Charged");
+        Console.WriteLine("-----------+---------+----------------------+----------------------+---------------");
 
         while (iterator.HasNext())
         {
@@ -748,22 +775,21 @@ class Program
 
             if (record.EntryDateTime.Month == month.Month && record.EntryDateTime.Year == month.Year)
             {
-                if (record.IsStaffRecord) {
-                    staffParkingRecordsRevenue += record.AmountCharged;
-                    staffParkingRecords++;
-                }
-                else
-                {
-                    studentParkingRecordsRevenue += record.AmountCharged;
-                    studentParkingRecords++;
-                }
+                records++;
+                revenue += record.AmountCharged;
+
+                Console.WriteLine(record.ToString());
             }
             else if (month > record.EntryDateTime)
             {
                 break;
             }
         }
+        
+        Console.WriteLine($"\n\nNumber of Records: {records}");
 
-        return new Report(month, staffParkingRecords, studentParkingRecords, staffParkingRecordsRevenue, studentParkingRecordsRevenue);
+        string formattedRevenue = revenue.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+
+        Console.WriteLine($"          Revenue: ${formattedRevenue}");
     }
 }

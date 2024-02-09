@@ -1,3 +1,4 @@
+
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,24 @@ namespace SE_Assignment_Codes
             ExitDateTime = exitDateTime;
             IsStaffRecord = isStaffRecord;
             AmountCharged = amountCharged;
+        }
+
+        public static ParkingRecord FromString(string line)
+        {
+            string[] row = line.Split("    ");
+
+            if (row.Length != 5)
+            {
+                return null;
+            }
+
+            int id = Convert.ToInt32(row[0]);
+            DateTime startDateTime = DateTime.Parse(row[1]);
+            DateTime endDateTime = DateTime.Parse(row[2]);
+            double amountCharged = Convert.ToDouble(row[3]);
+            bool isStaffRecord = row[4] == "y";
+
+            return new ParkingRecord(id, startDateTime, endDateTime, amountCharged, isStaffRecord);
         }
 
         // Capture parking data
@@ -63,6 +82,28 @@ namespace SE_Assignment_Codes
         {
             // Sample implementation, replace with actual logic
             Console.WriteLine("Retrieving car park details...");
+        }
+
+        public string ToString()
+        {
+            string output = "";
+
+            string recordNumber = RecordNumber.ToString();
+
+            int recordNumberPadding = 9 - recordNumber.Length;
+
+            for (int i = 0; i < recordNumberPadding; i++)
+            {
+                output += " ";
+            }
+
+            output += "#" + recordNumber + " | ";
+            output += (IsStaffRecord ? "Staff  " : "Student") + " | ";
+            output += EntryDateTime.ToString("dd-MM-yyyy, HH:mm:ss") + " | ";
+            output += ExitDateTime.ToString("dd-MM-yyyy, HH:mm:ss") + " | ";
+            output += "$" + AmountCharged.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+
+            return output;
         }
     }
 }

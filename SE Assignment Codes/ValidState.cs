@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +22,8 @@ namespace SE_Assignment_Codes
 
         public void Renew()
         {
-            // seasonPass.Renew(); --> GOT ERROR
+            // seasonPass.Renew(); --> GOT NO ERROR
+            // Needs implementation, not from us.
         }
 
         public void Expire()

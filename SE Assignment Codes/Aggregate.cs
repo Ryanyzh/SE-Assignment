@@ -1,3 +1,4 @@
+
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,6 @@ namespace SE_Assignment_Codes
 {
     interface Aggregate
     {
-        ReportIterator CreateIterator();
+        ConcreteReportIterator CreateIterator();
     }
 }

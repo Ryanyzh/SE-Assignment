@@ -1,3 +1,4 @@
+
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SE_Assignment_Codes
 {
-    class ConcreteAggregate : Aggregate
+    class ByStudent : Aggregate
     {
         private List<ParkingRecord> parkingRecords = new List<ParkingRecord>();
 
@@ -16,12 +17,12 @@ namespace SE_Assignment_Codes
             parkingRecords.Insert(0, record);
         }
 
-        public ReportIterator CreateIterator()
+        public ConcreteReportIterator CreateIterator()
         {
             return new ConcreteReportIterator(parkingRecords);
         }
 
-        public ConcreteAggregate() {
+        public ByStudent() {
             string filePath = @"parkingrecords.tsv";
 
             try
@@ -30,20 +31,14 @@ namespace SE_Assignment_Codes
 
                 foreach (string line in lines)
                 {
-                    string[] row = line.Split("    ");
+                    ParkingRecord record = ParkingRecord.FromString(line);
 
-                    if (row.Length != 5)
+                    if (record == null || record.IsStaffRecord)
                     {
                         continue;
                     }
-
-                    int id = Convert.ToInt32(row[0]);
-                    DateTime startDateTime = DateTime.Parse(row[1]);
-                    DateTime endDateTime = DateTime.Parse(row[2]);
-                    double amountCharged = Convert.ToDouble(row[3]);
-                    bool isStaffRecord = row[4] == "y";
-
-                    AddParkingRecord(new ParkingRecord(id, startDateTime, endDateTime, amountCharged, isStaffRecord));
+                    
+                    AddParkingRecord(record);
                 }
                 
             }
@@ -53,7 +48,5 @@ namespace SE_Assignment_Codes
                 Console.WriteLine(e.Message);
             }
         }
-
-        public static ConcreteAggregate Shared = new ConcreteAggregate();
     }
 }
