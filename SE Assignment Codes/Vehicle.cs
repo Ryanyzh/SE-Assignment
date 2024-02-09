@@ -12,6 +12,8 @@ namespace SE_Assignment_Codes
         public string IUNumber { get; set; }
         public string VehicleType { get; set; }
 
+        public List<ParkingRecord> parkingRecordList = new List<ParkingRecord>();
+
         // Constructor
         public Vehicle(string licensePlateNumber, string iUNumber, string vehicleType)
         {
