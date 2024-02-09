@@ -7,11 +7,6 @@ using System.IO;
 using System.Diagnostics;
 using System.Runtime.ConstrainedExecution;
 
-public class Global
-{
-    static List<SeasonPass> seasonpass = new List<SeasonPass>();
-}
-
 class Program
 {
 
@@ -19,7 +14,6 @@ class Program
     {
         //Replace with csv reader 
         SeasonPass seasonPass = null;
-        
 
         // Get the directory where the executable is located
         string directory = AppDomain.CurrentDomain.BaseDirectory;
@@ -135,6 +129,34 @@ class Program
         }
         return seasonPass;
     }
+
+    public static List<SeasonPass> ProcessSeasonPassesFromFile()
+    {
+        List<SeasonPass> seasonPasses = new List<SeasonPass>();
+        try
+        {
+            // Read all lines from the file
+            string[] lines = File.ReadAllLines("SeasonPass.txt");
+
+            // Process each line to create a SeasonPass object and add it to the list
+            foreach (string line in lines)
+            {
+                SeasonPass seasonPass = ProcessSeasonPassDetails(line);
+                if (seasonPass != null) // Ensure the seasonPass is not null before adding
+                {
+                    seasonPasses.Add(seasonPass);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"An error occurred while processing the file: {e.Message}");
+        }
+
+        return seasonPasses;
+    }
+
+
 
     public static string getValueFromKey(string keyAndValue)
     {
@@ -442,12 +464,192 @@ class Program
         }
     }
 
+    public static void WriteToSeasonPassFileFromList(List<SeasonPass> seasonPasses)
+    {
+        try
+        {
+            // Overwrite the SeasonPass.txt file with the new details
+            using (StreamWriter sw = new StreamWriter("SeasonPass.txt"))
+            {
+                foreach (var seasonPass in seasonPasses)
+                {
+                    sw.Write($"SeasonPassId: {seasonPass.PassNumber},");
+                    sw.Write($"Username: {seasonPass.User.Username},");
+                    sw.Write($"Password: {seasonPass.User.Password},");
+                    sw.Write($"Name: {seasonPass.User.Name},");
+                    sw.Write($"UserId: {seasonPass.User.ID},");
+                    sw.Write($"MobileNumber: {seasonPass.User.MobileNumber},");
+                    sw.Write($"LicensePlateNumber: {seasonPass.Vehicle.LicensePlateNumber},");
+                    sw.Write($"IUNumber: {seasonPass.Vehicle.IUNumber},");
+                    sw.Write($"VehicleType: {seasonPass.Vehicle.VehicleType},");
+                    sw.Write($"StartMonth: {seasonPass.StartMonth:G},");
+                    sw.Write($"EndMonth: {seasonPass.EndMonth:G},");
+                    sw.Write($"SeasonPassState: {seasonPass.State},");
+                    sw.Write($"PassType: {seasonPass.Type},");
+                    sw.Write($"PaymentMode: {seasonPass.PaymentMode},");
+                    sw.Write($"UserType: {seasonPass.User.UserType}");
+                    sw.WriteLine(); // Ensures each SeasonPass entry is on a new line
+                }
+            }
+
+            Console.WriteLine("SeasonPass details successfully written to the file.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred while writing to the file: {ex.Message}");
+        }
+    }
 
 
     public static void ProcessSeasonPassApplication()
     {
-        Console.WriteLine();
+        //Load in from waitinlist text into waiting list
+        MonthlySeasonPass.ReadnLoadFromWaitingList();
+        List<User> waitingList = MonthlySeasonPass.GetWaitingList();
 
+        //All season pass holders
+        List<SeasonPass> seasonPasses = ProcessSeasonPassesFromFile();
+
+        while (true)
+        {
+            // Prompt user to select season pass type
+            Console.WriteLine("\n");
+            Console.WriteLine("--------ICTP Admin Option:--------");
+            Console.WriteLine("1. View waiting list");
+            Console.WriteLine("2. Process season pass");
+            Console.WriteLine("0. Exit\n");
+            Console.Write("Enter your choice: ");
+            string processSeasonPassOption = Console.ReadLine();
+
+            if (processSeasonPassOption == "1")
+            {
+                //Main interface
+                string waitingListOptionStr = "-1";
+                while (waitingListOptionStr != "0")
+                {
+                    int i = 0;
+                   
+                    Console.WriteLine("\n");
+                    Console.WriteLine("---------- Waiting List ----------");
+                    foreach (User user in waitingList)
+                    {
+                        i += 1;
+                        Console.WriteLine("{0}. {1} - {2}", i, user.Name, user.MobileNumber);
+                    }
+
+
+                    Console.WriteLine("\n");
+                    Console.WriteLine("Waiting list options:");
+                    Console.WriteLine("1. Send out notification when pass is available");
+                    Console.WriteLine("0. Exit ");
+                    waitingListOptionStr = Console.ReadLine();
+
+                    if(waitingListOptionStr == "1")
+                    {
+                        Console.WriteLine("Sending notification to waiting list applicants........");
+                        waitingList.Clear();
+                        break;
+                    }
+                }
+            }
+            else if (processSeasonPassOption == "2")
+            {
+                //Load in method and var
+                int tempMontlyAvailPass = MonthlySeasonPass.GetNumberOfMonthlyPassAvailable();
+                int i = 0;
+                int i2 = -1;
+                List<int> processindexList = new List<int>();
+
+                //Main interface for process season pass
+                string ProcessListOptionStr = "-1";
+                while (ProcessListOptionStr != "0")
+                {
+                    Console.WriteLine("\n");
+                    Console.WriteLine("--- Pending Processing [Monthly Pass Applications] ---");
+                    Console.WriteLine("\n");
+                    Console.WriteLine("   Name  UserType     userId");
+                    foreach (SeasonPass seasonpass in seasonPasses)
+                    {
+                        i2 += 1;
+                        if (seasonpass.State is ProcessingState && seasonpass.Type == "Monthly")
+                        {
+                            processindexList.Add(i2);
+                            i += 1;
+                            Console.WriteLine("{0}. {1} [{2}] - {3}", i, seasonpass.User.Username, seasonpass.User.UserType, seasonpass.User.ID);
+                        }
+                    }
+                    Console.WriteLine("\n");
+                    Console.Write("Remaining number of Montly Season Pass: {0}", tempMontlyAvailPass);
+                    Console.WriteLine("\n");
+
+                    Console.WriteLine("\n");
+                    Console.Write("Select applicant (0 to exit): ");
+                    ProcessListOptionStr = Console.ReadLine();
+
+                    int ProcessListOption = Convert.ToInt32(ProcessListOptionStr);
+                    if (ProcessListOption > 0)
+                    {
+                        //Load Indivdual applicant's details
+                        SeasonPass applicantDeatails = seasonPasses[processindexList[ProcessListOption - 1]];
+                        string ProcessAppOption = "";
+                        while (true)
+                        {
+                            Console.WriteLine("--- Applicant [{0}] Deatails ---", ProcessListOption);
+                            Console.WriteLine("\n");
+                            Console.WriteLine($"SeasonPassId: {applicantDeatails.PassNumber}");
+                            Console.WriteLine($"Name: {applicantDeatails.User.Name}");
+                            Console.WriteLine($"UserId: {applicantDeatails.User.ID}");
+                            Console.WriteLine($"Mobile Number: {applicantDeatails.User.MobileNumber}");
+                            Console.WriteLine($"Vehicle Type: {applicantDeatails.Vehicle.VehicleType}");
+                            Console.WriteLine($"Validity: {applicantDeatails.StartMonth.ToShortDateString()} - {applicantDeatails.EndMonth.ToShortDateString()}");
+                            Console.WriteLine($"Status: {applicantDeatails.State}");
+                            Console.WriteLine($"Pass Type: {applicantDeatails.Type}");
+                            Console.WriteLine($"Payment Mode: {applicantDeatails.PaymentMode}");
+                            Console.WriteLine($"User Type: {applicantDeatails.User.UserType}");
+
+                            Console.WriteLine("\n");
+                            Console.WriteLine("1. Approve application");
+                            Console.WriteLine("2. Reject application");
+                            Console.Write("Enter options (0 to exit): ");
+                            ProcessAppOption = Console.ReadLine();
+                            //Change state to valid
+                            if(ProcessAppOption == "1")
+                            {
+                                seasonPasses[processindexList[ProcessListOption - 1]].State = seasonPasses[processindexList[ProcessListOption - 1]].ValidState;
+                                MonthlySeasonPass.subtractSeasonPass();
+                                break;
+                            }
+                            //Reamin in processing
+                            else if (ProcessAppOption == "2")
+                            {
+                                Console.WriteLine("Simulate Reject......");
+                                break;
+                            }
+                            else if(ProcessAppOption == "0")
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Retry, Incorrect input!!!!");
+                            }
+                        }
+                        ProcessListOptionStr = "0";
+                    }
+                }
+            }
+            
+            else if (processSeasonPassOption == "0")
+            {
+                Console.Write("... ... ... Bye Bye Admin!!!");
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Invalid option selected. Please try again.");
+            }
+        }
+        WriteToSeasonPassFileFromList(seasonPasses);
     }
 
     public static void TerminateSeasonPass(SeasonPass seasonPass)
@@ -478,15 +680,7 @@ class Program
             seasonPass.Terminate(response);
             if (seasonPass is MonthlySeasonPass && seasonPass.State.GetType().ToString() == "SE_Assignment_Codes.TerminatedState")
             {
-                MonthlySeasonPass mp = (MonthlySeasonPass)seasonPass;
-                if (mp.refundedPass == false)
-                {
-                    mp.RefundUnusedMonths();
-                }
-                else
-                {
-                    Console.WriteLine("Pass has been refunded previously!");
-                }
+                ((MonthlySeasonPass)seasonPass).RefundUnusedMonths();
             }
         }
         else if (cancel == 2)

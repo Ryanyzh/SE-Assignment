@@ -14,8 +14,6 @@ namespace SE_Assignment_Codes
 		// Static variable representing the number of available monthly passes
 		private static int monthlySeasonPassAvailable;
 
-		public bool refundedPass = false;
-
 		private static List<User> WaitingList { get; } = new List<User>();
 
 		// Static constructor to initialize the number of available passes from the file
@@ -31,11 +29,16 @@ namespace SE_Assignment_Codes
 			// Update the number of available monthly passes after creating a new pass
 			monthlySeasonPassAvailable = FetchAvailableMonthlyPasses();
 		}
-		public void addSeasonPass()
+        public static List<User> GetWaitingList()
+        {
+            // Return a copy of the waiting list to avoid external modifications.
+            return new List<User>(WaitingList);
+        }
+        public static void addSeasonPass()
 		{
 			monthlySeasonPassAvailable += 1;
 		}
-		public void subtractSeasonPass()
+		public static void subtractSeasonPass()
 		{
 			monthlySeasonPassAvailable -= 1;
 		}
@@ -49,7 +52,8 @@ namespace SE_Assignment_Codes
 				string[] lines = File.ReadAllLines("SeasonPass.txt");
 
 				// Count the number of passes with "PassType: Monthly"
-				int monthlyPassCount = lines.Count(line => line.Contains("PassType: Monthly"));
+				int monthlyPassCount = lines.Count(line => line.Contains("PassType: Monthly") && line.Contains("SeasonPassState: SE_Assignment_Codes.ProcessingState"));
+				//Console.WriteLine(monthlyPassCount);
 
 				//Console.WriteLine($"monthlyPassCount {monthlyPassCount}");
 
@@ -94,8 +98,41 @@ namespace SE_Assignment_Codes
             int remainingMonths = ((EndMonth.Year - DateTime.Now.Year) * 12) + EndMonth.Month - DateTime.Now.Month; //Check if the end date includes that month
             double amountRefunded = remainingMonths * 150; //Assume that each month costs $150
             Console.WriteLine($"A refund of ${amountRefunded} has been sent to your account");
-            this.addSeasonPass();
-			this.refundedPass = true;
+            addSeasonPass();
+        }
+        public static void ReadnLoadFromWaitingList()
+        {
+            string filePath = "WaitingList.txt";
+            try
+            {
+                // Open the file for reading
+                using (StreamReader sr = new StreamReader(filePath))
+                {
+                    string line;
+                    // Read and display lines from the file until the end of the file is reached
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        // Extracting user details from the line
+                        string[] parts = line
+                            .Trim('{', '}')
+                            .Split(new string[] { ", " }, StringSplitOptions.None);
+
+                        string name = parts[0].Split(':')[1].Trim();
+                        string id = parts[1].Split(':')[1].Trim();
+                        string username = parts[2].Split(':')[1].Trim();
+                        string password = parts[3].Split(':')[1].Trim();
+                        string mobileNumber = parts[4].Split(':')[1].Trim();
+                        string userType = parts[5].Split(':')[1].Trim();
+
+                        User user = new User(name, id, username, password, mobileNumber, userType);
+                        WaitingList.Add(user);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while adding user to the waiting list: {ex.Message}");
+            }
         }
     }
 }
