@@ -13,6 +13,7 @@ namespace SE_Assignment_Codes
         public string Location { get; set; }
         public int NumOfCarParkingLots { get; set; }
         public int NumOfMotorbikeParkingLots { get; set; }
+        public List<ParkingRecord> parkingRecordList = new List<ParkingRecord>();
 
         // Constructor
         public CarPark(int carParkNumber, string description, string location, int numOfCarParkingLots, int numOfMotorbikeParkingLots)
