@@ -8,6 +8,6 @@ namespace SE_Assignment_Codes
 {
     interface Aggregate
     {
-        ReportIterator CreateIterator();
+        ConcreteReportIterator CreateIterator();
     }
 }
